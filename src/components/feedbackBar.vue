@@ -110,7 +110,7 @@
   }
 </script>
 <style scoped lang="less">
-  @import url('http://at.alicdn.com/t/c/font_4434170_wrbq13kkomm.css');
+  @import url('https://at.alicdn.com/t/c/font_4434170_wrbq13kkomm.css');
   .feedback-bar-wrapper-inner {
     width: 100%;
     display: flex;
