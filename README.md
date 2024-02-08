@@ -1,24 +1,7 @@
 # conversation-vue
 
-## Project setup
-```
-npm install
-```
+vue 聊天对话组件，包括 ConversationBlock，ConversationWrapper，MgsItem
+![alt text](image.png)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+**运行 npm run serve 查看示例**
+**src/readme.md 查看文档**

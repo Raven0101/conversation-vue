@@ -1,6 +1,6 @@
 # 组件 ConversationBlock
 
-开箱即用的极简对话组件
+开箱即用的极简对话区域组件，只需传入对话列表即可
 
 ```
 import ConversationBlock from 'conversationBlock.vue'
@@ -16,17 +16,17 @@ import ConversationBlock from 'conversationBlock.vue'
 **2. height**
 
 - **类型**：String, Number
-- **描述**：高度属性，可以接收字符串或数字类型的数据，用于设置元素的高度。
+- **描述**：高度属性，可以接收字符串或数字类型的数据，用于设置区域的高度。（注意只有设置高度才能实现 list 增加消息自动滑动到最下方）
 
 **3. userOptions**
 
 - **类型**：Object
-- **描述**：用户自定义配置对象，用户可以通过此对象设置特定的配置选项。
+- **描述**：用户自定义配置对象.
 
 **4. answerOptions**
 
 - **类型**：Object
-- **描述**：回答者自定义配置对象，回答者可以通过此对象设置特定的配置选项。
+- **描述**：回答者自定义配置对象。
 
 **5. showFeedback**
 
@@ -43,185 +43,100 @@ import ConversationBlock from 'conversationBlock.vue'
 - **类型**：Function
 - **描述**：反馈处理函数，当用户进行反馈操作时，将调用此函数来处理用户的反馈。
 
-**说明**
-
-上述属性描述了一个具有消息列表、高度设置、用户自定义配置、回答者自定义配置、反馈显示开关、反馈可操作内容列表以及反馈处理函数的对象。这个对象可能是一个组件或模块的配置参数，用于实现消息展示、用户反馈等功能。在开发中，根据实际需要，可以对这些属性进行相应的赋值和调用处理。
-
 # 组件 ConversationWrapper
 
-对话区域
+包裹一个对话区域
 
 ```
 import ConversationWrapper from 'ConversationWrapper.vue'
 ```
 
+## Props
+
+**1. height**
+
+- **类型**：String, Number
+- **描述**：高度属性，可以接收字符串或数字类型的数据，用于设置区域高度。
+
 # 组件 MgsItem
 
-单独对话气泡组件
+单个对话气泡组件
 
 ```
 import MsgPop from 'msgItem.vue'
 ```
 
-## Props 列表
+## Prosp
 
-### msg
+**1. msg**
 
 - **类型**：`undefined`
 - **描述**：消息内容，支持 HTML
 
-### contentType
+**2. contentType**
 
 - **类型**：`[String, Number]`
 - **描述**：消息类型。0 代表回答者，1 代表提问者。
 - **默认值**：`1`
 
-### index
+**2. index**
 
 - **类型**：`[String, Number]`
 - **描述**：唯一识别本消息的 index
 
-### options
+**2. options**
 
 - **类型**：`Object`
-- **描述**：可配置项，包括头像、对齐位置。
-- **默认值**：`{avatar: undefined, position: 'left'}`
+- **描述**：可配置项，包括头像、对齐位置、自定义类名。
+- **默认值**：`{avatar: undefined, position: 'left'，customClass:undefined}`
 
-### showFeedback
+**2. showFeedback**
 
 - **类型**：`Boolean`
 - **描述**：是否显示反馈
 - **默认值**：`false`
 
-### feedbackList
+**2. feedbackList**
 
 - **类型**：`Array`
 - **描述**：反馈可操作内容列表，包括'like'、'diss'、'reAnswer'和'feedback'。
 - **默认值**：`['like', 'diss', 'reAnswer', 'feedback']`
 
-### likeType
+**2. likeType**
 
 - **类型**：`[String, Number]`
 - **描述**：点赞状态。1 代表点赞，0 代表无状态，-1 代表点踩。
 - **默认值**：`0`
 
-### feedbackHandler
+**2. feedbackHandler**
 
 - **类型**：`Function`
-- **描述**：处理反馈的回调函数，传参包含 index、type 和 value 的对象。type 与 feedbackList 里一致，当 type='like'或 type='diss'时，value 为当前 likeType，其他情况 value=undefined
+- **描述**：处理反馈的回调函数
 - **默认值**：空函数 `() => {}`
 
-### slots
+**2. slots**
 
 - **类型**：`Array`
 - **描述**：应用的 slot，包括'content'和'feedback'。
 - **默认值**：空数组 `[]`
 
+## 一些公共属性说明
+
+**1. options (userOptions、answerOptions 同)**
+可配置项：`头像'avatar'、对齐位置'position'、自定义类名'customClass'`
+
+**1. feedbackList**
+
+可选值：`'like'点赞, 'diss'点踩, 'reAnswer'重新回答, 'feedback'反馈问题`
+
+**2. likeType**
+
+返回值：`1 代表点赞，0 代表无状态，-1 代表点踩`
+
+**3. feedbackHandler**
+
+处理反馈的回调函数，传参包含 index、type 和 value 的对象。type 与 feedbackList 里一致，当 type='like'或 type='diss'时，value 为当前 likeType，其他情况 value=undefined
+
 ## 示例
 
-- 基础用法
-
-```
-<template>
-    <Conversation class="conversition" id="scroll">
-        <MsgPop msg="你好，我是提问者" contentType="1"></MsgPop>
-        <MsgPop msg="你好，我是回答者" contentType="0"></MsgPop>
-    </Conversation>
-</template>
-```
-
-![基础用法](image.png)
-
-- 配置头像以及位置
-
-```
-<template>
-    <Conversation class="conversition" id="scroll">
-        <MsgPop
-          msg="我在右边"
-          contentType="1"
-          :options="{ position: 'right' }"
-        ></MsgPop>
-        <MsgPop
-          msg="我在左边"
-          contentType="0"
-          :options="{ avatar: '/img/编组 6.91f06e99.png', position: 'left' }"
-        ></MsgPop>
-    </Conversation>
-</template>
-```
-
-![配置头像以及位置](image-2.png)
-
-- 显示反馈，配置反馈项目，配置反馈处理函数
-
-```
-<template>
-    <Conversation class="conversition" id="scroll">
-        <MsgPop
-          msg="默认显示所有反馈项"
-          contentType="0"
-          :options="options"
-          :showFeedback="true"
-          :feedbackHandler="feedbackHandler"
-          :likeType="likeType"
-        ></MsgPop>
-        <MsgPop
-          msg="可配置反馈项['like', 'diss']"
-          contentType="0"
-          :options="options"
-          :showFeedback="true"
-          :feedbackList="['like', 'diss']"
-        ></MsgPop>
-    </Conversation>
-</template>
-<script>
-    export default {
-    data() {
-        return {
-            likeType:0,
-            options:{ avatar: '/img/编组 6.91f06e99.png', position: 'left' }
-        }
-    },
-    methods: {
-        handelFeedback(e) {
-            console.log('feedback :>> ', e)
-            if(e.type=='like'){
-                this.likeType=this.likeType==1?0:1
-            }else if(e.type=='diss'){
-                this.likeType=this.likeType==-1?0:-1
-            }else{
-
-            }
-        },
-    },
-    }
-</script>
-```
-
-![a显示反馈，配置反馈项目，配置反馈处理函数](image-5.png)
-
-- 可用插槽
-
-```
-<template>
-    <Conversation class="conversition" id="scroll">
-        <MsgPop
-          msg=""
-          contentType="0"
-          :showFeedback="true"
-          :slots="['content', 'feedback']"
-        >
-          <template slot="content"
-            ><a-button>我是content slot里的按钮</a-button></template
-          >
-          <template slot="feedback"
-            ><a-button>我是feedback slot里的按钮</a-button>
-          </template>
-        </MsgPop>
-    </Conversation>
-</template>
-
-```
-
-![可用插槽](image-6.png)
+运行 npm run serve 查看示例
